@@ -1,7 +1,7 @@
 import time
 import random
 
-class IPMejorada:
+class IPMejorada: # Clase para resolver el problema de la mochila utilizando backtracking con poda por cota
     def __init__(self, pesos, beneficios, capacidad):
         self.capacidad = capacidad
         # Ordenar por densidad beneficio/peso
@@ -9,7 +9,7 @@ class IPMejorada:
         self.n = len(pesos)
         self.mejor_beneficio = 0.0
 
-    def cota(self, nivel, peso_actual, beneficio_actual):
+    def cota(self, nivel, peso_actual, beneficio_actual): # Cálculo de la cota superior utilizando la técnica del fraccionamiento
         if peso_actual >= self.capacidad: return 0
         res = beneficio_actual
         p_acc = peso_actual
@@ -22,7 +22,7 @@ class IPMejorada:
                 break
         return res
 
-    def bnb(self, nivel, peso_actual, beneficio_actual):
+    def bnb(self, nivel, peso_actual, beneficio_actual): # Método recursivo para explorar el espacio de soluciones utilizando backtracking con poda por cota
         if beneficio_actual > self.mejor_beneficio:
             self.mejor_beneficio = beneficio_actual
         

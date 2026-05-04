@@ -19,7 +19,7 @@ class SolverIPMejorado {
     double cota(int nivel, double peso_a, double benef_a) {
         double res = benef_a, p_acc = peso_a;
         for (int i = nivel; i < n; ++i) {
-            if (p_acc + items[i].w <= cap) { p_acc += items[i].w; res += items[i].p; }
+            if (p_acc + items[i].w <= cap) { p_acc += items[i].w; res += items[i].p; } // Si el siguiente item no cabe, se añade la fracción que sí cabe
             else { res += items[i].p * ((cap - p_acc) / items[i].w); break; }
         }
         return res;
@@ -36,13 +36,13 @@ public:
     SolverIPMejorado(const vector<double>& w_in, const vector<double>& p_in, double c) 
         : mejor_p(0.0), cap(c), nodos_visitados(0) {
         n = w_in.size();
-        for (int i=0; i<n; ++i) items.push_back({w_in[i], p_in[i], p_in[i]/w_in[i]});
+        for (int i=0; i<n; ++i) items.push_back({w_in[i], p_in[i], p_in[i]/w_in[i]}); // Cálculo de la relación beneficio/peso
         sort(items.begin(), items.end(), comp);
     }
     void resolver() {
-        auto inicio = chrono::high_resolution_clock::now();
+        auto inicio = chrono::high_resolution_clock::now();// Inicio del cronómetro
         bnb(0, 0, 0);
-        auto fin = chrono::high_resolution_clock::now();
+        auto fin = chrono::high_resolution_clock::now(); // Fin del cronómetro
         chrono::duration<double> transcurrido = fin - inicio;
         cout << "N: " << left << setw(4) << n << " | Tiempo: " 
              << fixed << setprecision(15) << transcurrido.count() << "s | Nodos: " 
@@ -64,7 +64,7 @@ int main() {
             beneficios.push_back(dist_p(rng));
             suma_pesos += pesos.back();
         }
-        SolverIPMejorado solver(pesos, beneficios, suma_pesos * 0.5);
+        SolverIPMejorado solver(pesos, beneficios, suma_pesos * 0.5); // Capacidad al 50% de la suma de pesos
         solver.resolver();
     }
     return 0;

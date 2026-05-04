@@ -1,20 +1,20 @@
 import time
 import random
 
-class IPBase:
-    def __init__(self, pesos, beneficios, capacidad):
+class IPBase: # Clase para resolver el problema de la mochila utilizando backtracking sin optimizaciones
+    def __init__(self, pesos, beneficios, capacidad): # Constructor para inicializar los datos del problema
         self.pesos = pesos
         self.beneficios = beneficios
         self.capacidad = capacidad
         self.n = len(pesos)
         self.mejor_beneficio = 0.0
 
-    def backtracking(self, nivel, peso_actual, beneficio_actual):
+    def backtracking(self, nivel, peso_actual, beneficio_actual): # Método recursivo para explorar el espacio de soluciones utilizando backtracking
         if beneficio_actual > self.mejor_beneficio:
             self.mejor_beneficio = beneficio_actual
         if nivel == self.n:
             return
-        if peso_actual + self.pesos[nivel] <= self.capacidad:
+        if peso_actual + self.pesos[nivel] <= self.capacidad: # Si se puede incluir el ítem actual, se explora esa rama
             self.backtracking(nivel + 1, peso_actual + self.pesos[nivel], beneficio_actual + self.beneficios[nivel])
         self.backtracking(nivel + 1, peso_actual, beneficio_actual)
 
@@ -32,4 +32,4 @@ if __name__ == "__main__":
         inicio = time.perf_counter()
         solucionador.backtracking(0, 0.0, 0.0)
         fin = time.perf_counter()
-        print(f"N: {n_test} | Beneficio: {solucionador.mejor_beneficio:.2f} | Tiempo: {fin - inicio:.6f}s")
+        print(f"N: {n_test} | Beneficio: {solucionador.mejor_beneficio:.2f} | Tiempo: {fin - inicio:.6f}s") 

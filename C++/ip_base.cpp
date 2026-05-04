@@ -12,11 +12,11 @@ class SolverIPBase {
     const vector<double>& w;
     const vector<double>& p;
     double cap;
-    unsigned long long nodos_visitados; // Contador real de nodos
+    unsigned long long nodos_visitados; // Contador  de nodos
 
     void backtrack(int nivel, double peso_cur, double benef_cur) {
         nodos_visitados++; // Incremento por cada nodo visitado
-        if (benef_cur > mejor_beneficio) mejor_beneficio = benef_cur;
+        if (benef_cur > mejor_beneficio) mejor_beneficio = benef_cur; // Actualiza el mejor beneficio encontrado
         if (nivel == n) return;
         if (peso_cur + w[nivel] <= cap) {
             backtrack(nivel + 1, peso_cur + w[nivel], benef_cur + p[nivel]);
@@ -28,9 +28,9 @@ public:
         : n(pesos.size()), mejor_beneficio(0.0), w(pesos), p(beneficios), cap(capacidad), nodos_visitados(0) {}
 
     void resolver() {
-        auto inicio = chrono::high_resolution_clock::now();
+        auto inicio = chrono::high_resolution_clock::now(); // Inicio del cronómetro
         backtrack(0, 0.0, 0.0);
-        auto fin = chrono::high_resolution_clock::now();
+        auto fin = chrono::high_resolution_clock::now(); // Fin del cronómetro
         chrono::duration<double> transcurrido = fin - inicio;
         cout << "N: " << left << setw(3) << n << " | Tiempo: " 
              << fixed << setprecision(6) << transcurrido.count() << "s | Nodos visitados: " 
@@ -45,7 +45,7 @@ int main() {
     uniform_real_distribution<double> dist_p(10.0, 50.0);
 
     for (int n_actual : n_pruebas) {
-        vector<double> pesos, beneficios;
+        vector<double> pesos, beneficios; // Generación de pesos y beneficios aleatorios
         double suma_pesos = 0;
         for (int i = 0; i < n_actual; ++i) {
             pesos.push_back(dist_w(rng));
